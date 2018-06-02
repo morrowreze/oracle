@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\nlibrary(ggplot2)\nlibrary(devtools)\nlibrary(RSkittleBrewer)\nlibrary(ggjoy)\nskittle = RSkittleBrewer('wildberry')\n\nload('~/oracle/data/oracle_clean.Rdata')\nload('~/oracle/data/oracle_cadj.Rdata')\n\ns = cadj %>%\n  filter(split %in% c('2017-1', '2017-1po', '2017-2'),\n         player %in% c('Bjergsen', 'Jensen', 'Pobelter', 'Huhi', 'Froggen'),\n         position == 'Middle',\n         league == 'NALCS')\n\n# gold difference at 15\ntitle = 'Early Gold Difference'\nval = 'Gold Difference at 15'\np_ord = s %>%\n  group_by(player) %>%\n  summarise(mean = mean(gdat15)) %>%\n  arrange(desc(mean))\n\np_gdat15 = s %>%\n  mutate(player = factor(player,\n                         levels = p_ord$player,\n                         ordered = TRUE))\n\nggplot(p_gdat15, aes(player, gdat15)) +\n  geom_hline(yintercept = 0, col = 'darkorange', alpha = 0.50) +\n  geom_violin(col = 'white') +\n  geom_jitter(data = s, aes(player, gdat15, col = player),\n              width = 0.10,\n              alpha = 0.25) +\n  stat_summary(fun.y=mean, geom=\"point\", shape=21, size=3, col = 'black', fill = 'white') +\n  scale_color_manual(values = skittle) +\n  scale_y_continuous(limits = c(-max(abs(s$gdat15)),\n                                max(abs(s$gdat15)))) +\n  labs(x = 'Player',\n       y = val,\n       title = title,\n       col = 'Player') +\n  theme(plot.title = element_text(hjust = 0.5))\n\n# cs share post 15\ntitle = 'CS Allocation'\nval = 'CS Share Post 15 Minutes'\nggplot(s, aes(player, cssharepost15)) +\n  geom_hline(yintercept = 0, col = 'darkorange', alpha = 0.50) +\n  geom_violin(col = 'white') +\n  geom_jitter(data = s, aes(player, cssharepost15, col = player),\n              width = 0.10,\n              alpha = 0.25) +\n  stat_summary(fun.y=mean, geom=\"point\", shape=20, size=3) +\n  scale_color_manual(values = skittle) +\n  coord_cartesian(ylim = c(-0.15, 0.15)) +\n  labs(x = 'Player',\n       y = val,\n       title = title,\n       col = 'Player') +\n  theme(plot.title = element_text(hjust = 0.5))\n\n# damage share\ntitle = 'Share of Team\\'s Damage to Champs'\nval = 'Damage Share'\nggplot(s, aes(player, dmgshare)) +\n  geom_hline(yintercept = 0, col = 'darkorange', alpha = 0.50) +\n  geom_violin(col = 'white') +\n  geom_jitter(data = s, aes(player, dmgshare, col = player),\n              width = 0.10,\n              alpha = 0.25) +\n  scale_color_manual(values = skittle) +\n  labs(x = 'Player',\n       y = val,\n       title = title,\n       col = 'Player') +\n  theme(plot.title = element_text(hjust = 0.5))\n",
+    "created" : 1502861040824.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4095574630",
+    "id" : "65907021",
+    "lastKnownWriteTime" : 1506816275,
+    "last_content_update" : 1506816275594,
+    "path" : "~/oracle/oracle_analysis.R",
+    "project_path" : "oracle_analysis.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

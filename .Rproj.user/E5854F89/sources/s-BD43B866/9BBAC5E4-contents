@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "Andy Timmy"
+date: "June 1, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      comment = NA,
+                      results = 'hold')
+```
+

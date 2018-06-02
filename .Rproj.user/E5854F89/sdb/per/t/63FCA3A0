@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readxl)\nlibrary(dplyr)\n\ncomplete16 = read_xlsx('~/oracle/data/2016_complete.xlsx')\nspring17 = read_xlsx('~/oracle/data/2017_spring.xlsx')\nsummer17 = read_xlsx('~/oracle/data/2017_spring.xlsx')\n\ncomplete16 = complete16 %>%\n  mutate(gameid = as.character(gameid)) %>%\n  mutate_at(vars(elementals:oppelders),\n            funs(as.numeric(.)))\n\ndat = bind_rows(complete16, spring17, summer17) %>%\n  mutate(patchno = factor(patchno,\n                          levels = unique(patchno)[order(unique(patchno))],\n                          ordered = TRUE))\n\nrm(list = setdiff(ls(), 'dat'))\nsave(dat, file = '~/oracle/data/oracle_clean.Rdata')\n",
+    "created" : 1506813315137.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2150243871",
+    "id" : "63FCA3A0",
+    "lastKnownWriteTime" : 1506815493,
+    "last_content_update" : 1506815493372,
+    "path" : "~/oracle/oracle_cleaner.R",
+    "project_path" : "oracle_cleaner.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

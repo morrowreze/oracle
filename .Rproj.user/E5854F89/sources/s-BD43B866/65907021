@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1502861040824.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "65907021",
+    "lastKnownWriteTime" : 1527532643,
+    "last_content_update" : 1527532643778,
+    "path" : "~/oracle/oracle_analysis.R",
+    "project_path" : "oracle_analysis.R",
+    "properties" : {
+        "cursorPosition" : "30,30",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

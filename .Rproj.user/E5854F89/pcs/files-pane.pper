@@ -1,0 +1,9 @@
+{
+    "path" : "~/oracle",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
