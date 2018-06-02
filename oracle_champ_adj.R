@@ -1,27 +1,36 @@
 library(dplyr)
 
-load('~/oracle/data/oracle_clean.Rdata')
+load('./data/oracle_clean.Rdata')
+
+dat = dat %>%
+  filter(player != 'Team')
 
 champ_dat = dat %>%
-  filter(player != team) %>%
   group_by(champion) %>%
-  summarise_if(is.numeric, mean, na.rm = TRUE)
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>%
+  ungroup()
 
-cadj_comb = dat %>%
+champ_dat[is.na(champ_dat)] = NA
+
+cp_join = dat %>%
   left_join(champ_dat, by = 'champion', suffix = c('_p', '_c'))
 
-cadj_share = cadj_comb %>%
-  select(ends_with('_p'), ends_with('_c'))
-
-cadj_dat = cadj_comb %>%
+cadj_starter = cp_join %>%
   select(-ends_with('_p'), -ends_with('_c'))
 
-cadj_sub = cadj_share[,1:78] - cadj_share[,79:156]
-names(cadj_sub) = sapply(names(cadj_sub), FUN = function(x) substr(x,1,nchar(x) - 2))
+player_dat = cp_join %>%
+  select(ends_with('_p'))
+
+champ_dat = cp_join %>%
+  select(ends_with('_c'))
+
+cadj_dat = player_dat - champ_dat
+
+
 
 cadj = cadj_dat %>%
-  bind_cols(cadj_sub)
+  bind_cols(cadj_starter)
 
-rm(list = setdiff(ls(), 'cadj'))
+names(cadj) = gsub('_p$', '', names(cadj))
 
 save(cadj, file = '~/oracle/data/oracle_cadj.Rdata')
