@@ -17,7 +17,10 @@ dat = bind_rows(complete_2016, complete_2017, spring_2018) %>%
                           levels = unique(patchno)[order(unique(patchno))],
                           ordered = TRUE),
          date = regmatches(date, regexpr('^[0-9]*', date)),
-         date = as.Date(as.numeric(date), origin = '1899-12-30')) %>%
+         date = as.Date(as.numeric(date), origin = '1899-12-30'),
+         champion = if_else(champion == 'Cho\'gath',
+                            'Cho\'Gath',
+                            champion)) %>%
   mutate_at(vars(gamelength,
                  fbtime:ckpm,
                  fdtime,
